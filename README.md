@@ -1,119 +1,146 @@
-# Full-Stack Coding Challenge
+# Task Management Application
 
-**Deadline**: Sunday, Feb 23th 11:59 pm PST
+This project is a minimal task management application built with React and TypeScript on the frontend, Node.js on the backend, and PostgreSQL as the database. It includes user registration, login (with JWT-based authentication and bcrypt password hashing), and task CRUD operations.
 
----
+## Table of Contents
 
-## Overview
+- [Database Setup](#database-setup)
+- [Backend Setup](#backend-setup)
+- [Frontend Setup](#frontend-setup)
+- [Testing](#testing)
+- [Salary Expectations](#salary-expectations)
+- [Notes](#notes)
 
-Create a “Task Management” application with **React + TypeScript** (frontend), **Node.js** (or **Nest.js**) (backend), and **PostgreSQL** (database). The application should:
+## Database Setup
 
-1. **Register** (sign up) and **Log in** (sign in) users.
-2. After logging in, allow users to:
-   - **View a list of tasks**.
-   - **Create a new task**.
-   - **Update an existing task** (e.g., mark complete, edit).
-   - **Delete a task**.
+### Prerequisites
 
-Focus on **correctness**, **functionality**, and **code clarity** rather than visual design.  
-This challenge is intended to be completed within ~3 hours, so keep solutions minimal yet functional.
+- PostgreSQL installed on your system. You can find official downloads [here](https://www.postgresql.org/download/).
+- A PostgreSQL client (e.g., `psql` or pgAdmin) to run SQL scripts.
 
----
+### Steps
 
-## Requirements
+1. **Create the Database:**
 
-### 1. Authentication
+   Create a new PostgreSQL database (named used in this project is `task_app`)
 
-- **User Model**:
-  - `id`: Primary key
-  - `username`: Unique string
-  - `password`: Hashed string
-- **Endpoints**:
-  - `POST /auth/register` – Create a new user
-  - `POST /auth/login` – Login user, return a token (e.g., JWT)
-- **Secure the Tasks Routes**: Only authenticated users can perform task operations.  
-  - **Password Hashing**: Use `bcrypt` or another hashing library to store passwords securely.
-  - **Token Verification**: Verify the token (JWT) on each request to protected routes.
+   ```sql
+   CREATE DATABASE task_app;
+   ```
 
-### 2. Backend (Node.js or Nest.js)
+2. **Run Migrations:**
 
-- **Tasks CRUD**:  
-  - `GET /tasks` – Retrieve a list of tasks (optionally filtered by user).  
-  - `POST /tasks` – Create a new task.  
-  - `PUT /tasks/:id` – Update a task (e.g., mark as complete, edit text).  
-  - `DELETE /tasks/:id` – Delete a task.
-- **Task Model**:
-  - `id`: Primary key
-  - `title`: string
-  - `description`: string (optional)
-  - `isComplete`: boolean (default `false`)
-  - _(Optional)_ `userId` to link tasks to the user who created them
-- **Database**: PostgreSQL
-  - Provide instructions/migrations to set up:
-    - `users` table (with hashed passwords)
-    - `tasks` table
-- **Setup**:
-  - `npm install` to install dependencies
-  - `npm run start` (or `npm run dev`) to run the server
-  - Document any environment variables (e.g., database connection string, JWT secret)
+   Execute the following SQL commands to create the required tables:
 
-### 3. Frontend (React + TypeScript)
+   ```sql
+   -- Create the users table
+   CREATE TABLE users (
+       id SERIAL PRIMARY KEY,
+       username VARCHAR(255) UNIQUE NOT NULL,
+       password VARCHAR(255) NOT NULL
+   );
 
-- **Login / Register**:
-  - Simple forms for **Register** and **Login**.
-  - Store JWT (e.g., in `localStorage`) upon successful login.
-  - If not authenticated, the user should not see the tasks page.
-- **Tasks Page**:
-  - Fetch tasks from `GET /tasks` (including auth token in headers).
-  - Display the list of tasks.
-  - Form to create a new task (`POST /tasks`).
-  - Buttons/fields to update a task (`PUT /tasks/:id`).
-  - Button to delete a task (`DELETE /tasks/:id`).
-- **Navigation**:
-  - Show `Login`/`Register` if not authenticated.
-  - Show `Logout` if authenticated.
-- **Setup**:
-  - `npm install` then `npm start` (or `npm run dev`) to run.
-  - Document how to point the frontend at the backend (e.g., `.env` file, base URL).
+   -- Create the tasks table
+   CREATE TABLE tasks (
+       id SERIAL PRIMARY KEY,
+       title VARCHAR(255) NOT NULL,
+       description TEXT,
+       "complete" BOOLEAN DEFAULT false,
+       "userid" INTEGER REFERENCES users(id)
+   );
+   ```
 
----
+3. **Environment Variables:**
 
-## Deliverables
+   Edit the `.env` file in the server directory. Placeholders/defaults are used, but you should use your own values.
 
-1. **Fork the Public Repository**: **Fork** this repo into your own GitHub account.
-2. **Implement Your Solution** in the forked repository. Make sure you're README file has:
-   - Steps to set up the database (migrations, environment variables).
-   - How to run the backend.
-   - How to run the frontend.
-   - Any relevant notes on testing.
-   - Salary Expectations per month (Mandatory)
-3. **Short Video Demo**: Provide a link (in a `.md` file in your forked repo) to a brief screen recording showing:
-   - Registering a user
-   - Logging in
-   - Creating, updating, and deleting tasks
-4. **Deadline**: Submissions are due **Sunday, Feb 23th 11:59 pm PST**.
+   ```
+   PORT=5000
+   BCRYPT_SALT_ROUNDS=10
+   JWT_SECRET=SECRET_KEY
+   DATABASE_URL=postgres://username:password@localhost:5432/task_app
+   ```
 
-> **Note**: Please keep your solution minimal. The entire project is intended to be completed in around 3 hours. Focus on core features (registration, login, tasks CRUD) rather than polished UI or extra features.
+   At minimum, you should replace `SECRET_KEY`, `username`, and `password` with your own values. You can generate a JWT key [here](https://jwtsecret.com/generate). `username` and `password` should be your PostgreSQL username and password. `5432` is the default port for PostgreSQL, but if you have a different port you should change it to your port.
 
----
+## Backend Setup
 
-## Evaluation Criteria
+### Prerequisites
 
-1. **Functionality**  
-   - Does registration and login work correctly (with password hashing)?
-   - Are tasks protected by authentication?
-   - Does the tasks CRUD flow work end-to-end?
+- Node.js
+- npm
 
-2. **Code Quality**  
-   - Is the code structured logically and typed in TypeScript?
-   - Are variable/function names descriptive?
+### Steps
 
-3. **Clarity**  
-   - Is the `README.md` (in your fork) clear and detailed about setup steps?
-   - Easy to run and test?
+1. Navigate to the `server/` directory.
 
-4. **Maintainability**  
-   - Organized logic (controllers/services, etc.)
-   - Minimal hard-coded values
+2. Install dependencies:
 
-Good luck, and we look forward to your submission!
+   ```bash
+   npm install
+   ```
+
+3. Run the backend server (development mode):
+
+   ```bash
+   npm run dev
+   ```
+   
+4. The server should start on the port specified in your `.env` file (default is `5000`).
+
+## Frontend Setup
+
+### Prerequisites
+
+- Node.js
+- npm
+
+### Steps
+
+1. Navigate to the `client/` directory.
+
+2. Edit the `.env` file in the frontend directory. It only has one value:
+
+   ```
+   REACT_APP_API_URL=http://localhost:5000
+   ```
+
+   Adjust the URL if your backend is hosted elsewhere.
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Run the frontend application:
+
+   ```bash
+   npm start
+   ```
+
+5. The React app will launch in your default browser (typically at `http://localhost:3000`).
+
+## Testing
+
+- **Manual API Testing:**
+  - You can use backend testing tools such as Postman to test the backend.
+  - **Registration:** `POST /auth/register`
+  - **Login:** `POST /auth/login` (retrieve a JWT)
+  - **Tasks Endpoints:** Use the JWT in the `authorization` header (e.g., `Bearer <token>`) for:
+    - `GET /tasks`
+    - `POST /tasks`
+    - `PUT /tasks/:id`
+    - `DELETE /tasks/:id`
+
+- **UI Testing:**
+  - Use the React frontend to perform registration, login, and task CRUD operations.
+  - A short video demo is provided in the repository (see `DEMO.md`) demonstrating these operations.
+
+## Salary Expectations (for Lumaa Internship)
+
+**Salary Expectations per month:** $20-30/hr
+
+Assuming 20 hours a week, 4 weeks a month: $1600-$2400/month
+
+Feel free to reach out if you have any questions regarding the project.
