@@ -9,7 +9,6 @@ This project is a minimal task management application built with React and TypeS
 - [Frontend Setup](#frontend-setup)
 - [Testing](#testing)
 - [Salary Expectations](#salary-expectations)
-- [Notes](#notes)
 
 ## Database Setup
 
