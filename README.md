@@ -8,7 +8,7 @@ This project is a minimal task management application built with React and TypeS
 - [Backend Setup](#backend-setup)
 - [Frontend Setup](#frontend-setup)
 - [Testing](#testing)
-- [Salary Expectations](#salary-expectations)
+- [Salary Expectations](#salary-expectations (for Lumaa Internship))
 
 ## Database Setup
 
