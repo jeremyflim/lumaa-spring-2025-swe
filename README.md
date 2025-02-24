@@ -21,7 +21,7 @@ This project is a minimal task management application built with React and TypeS
 
 1. **Create the Database:**
 
-   Create a new PostgreSQL database (named used in this project is `task_app`)
+   Create a new PostgreSQL database (name used in this project is `task_app`)
 
    ```sql
    CREATE DATABASE task_app;
