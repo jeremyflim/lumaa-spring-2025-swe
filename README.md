@@ -140,6 +140,6 @@ This project is a minimal task management application built with React and TypeS
 
 **Salary Expectations per month:** $20-30/hr
 
-Assuming 20 hours a week, 4 weeks a month: $1600-$2400/month
+For the Lumaa Internship, assuming 20 hours a week, 4 weeks a month: $1600-$2400/month
 
 Feel free to reach out if you have any questions regarding the project.
