@@ -8,7 +8,7 @@ This project is a minimal task management application built with React and TypeS
 - [Backend Setup](#backend-setup)
 - [Frontend Setup](#frontend-setup)
 - [Testing](#testing)
-- [Salary Expectations](#salary-expectations (for Lumaa Internship))
+- [Salary Expectations](#salary-expectations)
 
 ## Database Setup
 
@@ -136,7 +136,7 @@ This project is a minimal task management application built with React and TypeS
   - Use the React frontend to perform registration, login, and task CRUD operations.
   - A short video demo is provided in the repository (see `DEMO.md`) demonstrating these operations.
 
-## Salary Expectations (for Lumaa Internship)
+## Salary Expectations
 
 **Salary Expectations per month:** $20-30/hr
 
