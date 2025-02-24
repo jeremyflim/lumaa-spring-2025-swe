@@ -94,14 +94,21 @@ const TasksPage: React.FC<TasksPageProps> = ({ token }) => {
 
     // Delete a task
     const deleteTask = async (taskId: number) => {
-        await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`, {
-          method: 'DELETE',
-          headers: { Authorization: `Bearer ${token}` }
-        });
-
-        // Remove deleted task
-        setTasks(tasks.filter(task => task.id !== taskId));
-    };
+        setTasks((currentTasks) => currentTasks.filter((task) => task.id !== taskId))
+        try {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
+          })
+      
+          if (!response.ok) {
+            fetchTasks()
+          }
+        } catch (error) {
+          console.error("Error deleting task:", error)
+          fetchTasks()
+        }
+      }
 
     return (
         <div>
