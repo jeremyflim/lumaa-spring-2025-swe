@@ -13,6 +13,7 @@ export const authenticateToken = (req: AuthReq, res: Response, next: NextFunctio
         return;
     }
 
+    // Verify user's token to see their tasks
     jwt.verify(token, jwtSecret, (err, user: any) => {
         if (err) {
             res.sendStatus(403);
