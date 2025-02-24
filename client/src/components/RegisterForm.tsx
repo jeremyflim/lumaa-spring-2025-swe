@@ -27,14 +27,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister }) => {
                 body: JSON.stringify({ username, password })
             });
 
-            alert("Registration successful! Please log in.");
-
             if (!response.ok) {
                 alert(ERRORS.DEFAULT_REGISTER_ERROR);
                 return;
             }
 
-            alert('Registration successful! Please login.')
+            alert("Registration successful! Please log in.");
 
         } catch (error) {
             alert(ERRORS.DEFAULT_REGISTER_ERROR);
