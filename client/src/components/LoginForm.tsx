@@ -41,24 +41,24 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
     return (
         <form onSubmit={handleLogin}>
-        <h2>Login</h2>
-        <input 
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)} 
-          placeholder="Username" 
-          required 
-        />
-        <input 
-          type="password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          placeholder="Password" 
-          required 
-        />
-        <button type="submit">Login</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-      </form>        
-    );
+            <h2>Login</h2>
+            <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                required
+            />
+            <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+            />
+            <button type="submit">Login</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+        </form>
+    );    
 };
 
 export default LoginForm;

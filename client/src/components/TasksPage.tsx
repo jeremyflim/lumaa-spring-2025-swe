@@ -105,60 +105,68 @@ const TasksPage: React.FC<TasksPageProps> = ({ token }) => {
 
     return (
         <div>
-          <h2>Your Tasks</h2>
-          {/* Form to add a new task */}
-          <form onSubmit={addTask}>
-            <input 
-              value={title} 
-              onChange={(e) => setTitle(e.target.value)} 
-              placeholder="Task title" 
-              required 
-            />
-            <input 
-              value={description} 
-              onChange={(e) => setDescription(e.target.value)} 
-              placeholder="Task description" 
-            />
-            <button type="submit">Add Task</button>
-          </form>
+            <h2>Your Tasks</h2>
+            <form onSubmit={addTask}>
+                <input
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Task title"
+                    required
+                />
+                <input
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Task description"
+                />
+                <button type="submit">Add Task</button>
+            </form>
     
-          {/* Display list of tasks */}
-          <ul>
-            {tasks.map(task => (
-              <li key={task.id}>
-                {editingTaskId === task.id ? (
-                  // Render edit mode for this task
-                  <div>
-                    <input 
-                      value={editingTitle}
-                      onChange={(e) => setEditingTitle(e.target.value)}
-                      placeholder="New title"
-                    />
-                    <input 
-                      value={editingDescription}
-                      onChange={(e) => setEditingDescription(e.target.value)}
-                      placeholder="New description"
-                    />
-                    <button onClick={() => updateTask(task)}>Update</button>
-                    <button onClick={cancelEditing}>Cancel</button>
-                  </div>
-                ) : (
-                  // Render display mode for this task
-                  <div>
-                    <span style={{ textDecoration: task.complete ? 'line-through' : 'none' }}>
-                      {task.title} - {task.description}
-                    </span>
-                    <button onClick={() => startEditing(task)} style={{ marginLeft: '10px' }}>
-                      Edit
-                    </button>
-                    <button onClick={() => deleteTask(task.id)} style={{ marginLeft: '10px' }}>
-                      Delete
-                    </button>
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
+            <ul>
+                {tasks.map((task) => (
+                    <li key={task.id}>
+                        {editingTaskId === task.id ? (
+                            <div>
+                                <input
+                                    value={editingTitle}
+                                    onChange={(e) => setEditingTitle(e.target.value)}
+                                    placeholder="New title"
+                                />
+                                <input
+                                    value={editingDescription}
+                                    onChange={(e) => setEditingDescription(e.target.value)}
+                                    placeholder="New description"
+                                />
+                                <button onClick={() => updateTask(task)}>Update</button>
+                                <button onClick={cancelEditing}>Cancel</button>
+                            </div>
+                        ) : (
+                            <div>
+                                <span
+                                    style={{
+                                        textDecoration: task.complete
+                                            ? 'line-through'
+                                            : 'none'
+                                    }}
+                                >
+                                    {task.title} - {task.description}
+                                </span>
+                                <button
+                                    onClick={() => startEditing(task)}
+                                    style={{ marginLeft: '10px' }}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => deleteTask(task.id)}
+                                    style={{ marginLeft: '10px' }}
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        )}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };
