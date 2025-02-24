@@ -50,6 +50,12 @@ router.put('/:id', async (req, res) => {
             'UPDATE tasks SET title = $1, description = $2, complete = $3 WHERE id = $4 RETURNING *',
             [title, description, complete, taskId]
         );
+
+        if (result.rows.length === 0) {
+            res.status(404).json({ error: ERRORS.TASK_NOT_FOUND });
+            return;
+        }
+
         res.json(result.rows[0]);
 
     } catch (err) {
